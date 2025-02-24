@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import studentList from "./students";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <td>{studentList[i].name}</td>
       <td>{studentList[i].clzz}</td>
       <td>{studentList[i].roll}</td>
+      <td><Link href={'/student'}>details</Link></td>
     </tr>))
   }
 
