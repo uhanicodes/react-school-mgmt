@@ -8,13 +8,14 @@ export default function Home() {
   let students = [];
 
   for (let i = 0; i < studentList.length; i++) {
-    students.push((<tr key={studentList[i].clzz} onClick={() => {
+
+    students.push((<tr key={studentList[i].id} onClick={() => {
       alert("You click me!");
     }}>
       <td>{studentList[i].name}</td>
       <td>{studentList[i].clzz}</td>
       <td>{studentList[i].roll}</td>
-      <td><Link href={'/student'}>details</Link></td>
+      <td><Link href={'/student/' + studentList[i].id}>details</Link></td>
     </tr>))
   }
 
