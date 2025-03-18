@@ -16,8 +16,6 @@ app.use(bodyParser.json())
 app.use(cors());
 // app.use(bodyParser.urlencoded({ extended: false }))
 
-const students = require('./students.js');
-
 app.get('/', (req, res) => {
     res.send("Hello World!");
 })
@@ -63,7 +61,7 @@ app.post('/students', (req, res) => {
 
 app.get('/students/:id', (req, res) => {
     let sql = `SELECT * FROM students WHERE RollNumber = ${req.params.id}`;
-
+    
     console.log('sql:', sql);
 
     connection.query(sql, (err, row, fields) => {
