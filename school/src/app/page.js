@@ -74,7 +74,32 @@ export default function Home() {
                 <Link href={'/student/edit/' + row.original.id}>Edit</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={'/student/delete/' + row.original.id}>Delete</Link>
+                <div onClick={() => {
+                  const url = `http://localhost:5000/students/${row.original.ID}`
+                  const requestOptions = {
+                    method: 'DELETE'
+                  }
+
+                  fetch(url, requestOptions)
+                    .then(response => {
+                      console.log('Delete Successfull!');
+                      console.log(response);
+                      const url = `http://localhost:5000/students`
+                      const requestOptions = {
+                        method: 'GET',
+                        headers: { 'Content-Type' : 'application/json' },
+                        // body: JSON.stringify({firstName, lastName, rollNumber}) // what is this?
+                      }
+
+                      fetch(url, requestOptions)
+                        .then(response => response.json())
+                        .then(data => {
+                          console.log('data:', data)
+
+                          setStudents(data);
+                        })
+                    })
+                }}>Delete</div>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
