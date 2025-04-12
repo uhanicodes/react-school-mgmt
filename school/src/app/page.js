@@ -128,6 +128,9 @@ export default function Home() {
  
   return (
     <div>
+      <Button asChild>
+        <Link href="/student-form">Create New</Link>
+      </Button>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
