@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 import React from "react";
-import { useState } from "react";
+import Link from "next/link";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -44,68 +44,71 @@ export default function studentForm() {
   const form = useForm();
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitFrom)} className="space-y-8">
-        <FormField 
-          control={form.control} 
-          name='id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>ID</FormLabel>
-              <FormControl>
-                <Input placeholder="ID" {...field} />
-              </FormControl>
-              <FormDescription>
-                Put ID
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='rollNumber'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Roll</FormLabel>
-              <FormControl>
-                <Input placeholder="Roll" {...field} />
-              </FormControl>
-              <FormDescription>Write your roll number</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='firstName'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input placeholder="First Name" {...field} />
-              </FormControl>
-              <FormDescription>Write your first name</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='lastName'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Last Name" {...field} />
-              </FormControl>
-              <FormDescription>Write your last name</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />                
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <>
+      <Link href={'/'}>Back to students</Link>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(submitFrom)} className="space-y-8">
+          <FormField 
+            control={form.control} 
+            name='id'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ID</FormLabel>
+                <FormControl>
+                  <Input placeholder="ID" {...field} />
+                </FormControl>
+                <FormDescription>
+                  Put ID
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='rollNumber'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Roll</FormLabel>
+                <FormControl>
+                  <Input placeholder="Roll" {...field} />
+                </FormControl>
+                <FormDescription>Write your roll number</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='firstName'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="First Name" {...field} />
+                </FormControl>
+                <FormDescription>Write your first name</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='lastName'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Last Name" {...field} />
+                </FormControl>
+                <FormDescription>Write your last name</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />                
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
+    </>
   )
 }
