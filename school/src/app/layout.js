@@ -22,8 +22,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col max-w-xl">
-          {children}
+        <div className="flex flex-col items-center max-w-xl">
+          <div>
+            <h1 className="text-4xl font-extrabold">School Management System</h1>
+          </div>
+          <div className="mt-10">{children}</div>
         </div>
       </body>
     </html>

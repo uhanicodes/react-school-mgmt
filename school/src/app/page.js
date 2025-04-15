@@ -127,10 +127,12 @@ export default function Home() {
   }, []);
  
   return (
-    <div>
-      <Button asChild>
-        <Link href="/student-form">Create New</Link>
-      </Button>
+    <div className="flex flex-col">
+      <div className="flex flex-row-reverse">
+        <Button asChild className="align-right">
+          <Link href="/student-form">Create New</Link>
+        </Button>
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
