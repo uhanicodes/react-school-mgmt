@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col items-center max-w-xl">
+        <div className="max-w-[1024px] ml-auto mr-auto">
           <div>
             <h1 className="text-4xl font-extrabold">School Management System</h1>
           </div>
