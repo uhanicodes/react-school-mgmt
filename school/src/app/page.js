@@ -68,7 +68,7 @@ export default function Home() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                <Link href={'/student/' + row.original.id}>View</Link>
+                <Link href={'/student/' + row.original.ID}>View</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link href={'/student/edit/' + row.original.id}>Edit</Link>
