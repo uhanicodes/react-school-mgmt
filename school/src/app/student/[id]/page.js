@@ -1,8 +1,20 @@
 'use client';
 import { Button } from "@/components/ui/button";
-import { PenLine, X } from "lucide-react";
+import { PenLine, Save, X } from "lucide-react";
 import { use } from "react";
 import { useState } from "react";
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useForm } from "react-hook-form";
 
 function ViewStudent({ firstName, lastName, rollNumber, id, action }) {
 
@@ -18,12 +30,94 @@ function ViewStudent({ firstName, lastName, rollNumber, id, action }) {
   )
 }
 
-function EditStudent({ action }) {
+function EditStudent({ firstName, lastName, rollNumber, id, action }) {
+
+  const form = useForm();
+
+  function submitForm(data) {
+
+      console.log(data);
+
+      const url = `http://localhost:5000/students/${id}`
+      const requestOptions = {
+          method: 'PUT',
+          headers: { 'Content-Type' : 'application/json' },
+          body: JSON.stringify(data)
+      }
+
+      fetch(url, requestOptions)
+          .then(response => console.log('Submit Successfully!'))
+          .catch(error => console.log('Form submit error', error))
+  }
+
   return (<div>
-    <h1>Hello!</h1>
-    <Button onClick={action} variant="outline">
-      <X/>Cancel
-    </Button>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(submitForm)} className="space-y-8">
+        <FormField 
+          control={form.control} 
+          name='id'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID</FormLabel>
+              <FormControl>
+                <Input disabled placeholder="ID" {...field} />
+              </FormControl>
+              <FormDescription>
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='rollNumber'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Roll</FormLabel>
+              <FormControl>
+                <Input placeholder="Roll" {...field} />
+              </FormControl>
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='firstName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>First Name</FormLabel>
+              <FormControl>
+                <Input placeholder="First Name" {...field} />
+              </FormControl>
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='lastName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Last Name" {...field} />
+              </FormControl>
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">
+          <Save/>Save
+        </Button>
+        <Button onClick={action} variant="outline">
+          <X/>Cancel
+        </Button>
+      </form>
+    </Form>
   </div>)
 }
 
@@ -65,6 +159,10 @@ export default function Student({ params }) {
   return (
     <div>
       { isEdit ? <EditStudent 
+        firstName={firstName}
+        lastName={lastName}
+        rollNumber={rollNumber}
+        id={id}
         action={() => setEdit(false)}/> : <ViewStudent
         firstName={firstName}
         lastName={lastName}
