@@ -20,15 +20,20 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { Eye, UserRoundPlus } from "lucide-react";
+import { Trash } from "lucide-react";
 
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuLabel, 
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function Home() {
 
@@ -56,25 +61,34 @@ export default function Home() {
         header: () => <span>Last Name</span>
       },
       {
-        id: 'actions',
-        header: () => <span>Actions</span>,
+        id: 'view',
         cell: ({ row }) => (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Open menu</span>
+          <Link href={`/student/${row.original.ID}`}>
+            <Button variant="outline">
+              <Eye />
+            </Button>
+          </Link>
+        )
+      },
+      {
+        id: 'delete',
+        cell: ({ row }) => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" className="h-8 w-8 p-0">
+                <Trash className="h-4 w-4" />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Link href={'/student/' + row.original.ID}>View</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href={'/student/edit/' + row.original.id}>Edit</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <div onClick={() => {
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This student will be deleted permanently.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => {
                   const url = `http://localhost:5000/students/${row.original.ID}`
                   const requestOptions = {
                     method: 'DELETE'
@@ -99,11 +113,11 @@ export default function Home() {
                           setStudents(data);
                         })
                     })
-                }}>Delete</div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ),
+                }}>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )
       }
     ],
     getCoreRowModel: getCoreRowModel(),
@@ -130,7 +144,7 @@ export default function Home() {
     <div className="flex flex-col">
       <div className="flex flex-row-reverse">
         <Button asChild className="align-right">
-          <Link href="/student-form">Create New</Link>
+          <Link href="/student-form"><UserRoundPlus /> Create New</Link>
         </Button>
       </div>
       <Table>
