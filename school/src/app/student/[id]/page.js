@@ -1,25 +1,60 @@
-import studentList from "../../students";
+'use client';
+import { use } from "react";
+import { useState } from "react";
+
+function ViewStudent({ firstName, lastName, rollNumber, id }) {
+
+  return (
+    <div>
+      <h1>{firstName + " " + lastName}</h1>
+      <p>{rollNumber}</p>
+      <p>{id}</p>
+    </div>
+  )
+}
 
 export default function Student({ params }) {
 
-  console.log("students", studentList);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [rollNumber, setRoll] = useState("");
+  const [id, setID] = useState("");
+  const [isEdit, setEdit] = useState(false);
 
-  let student = null;
+  const { id : studentId } = use(params); 
+  // {
+  //   id: "1"
+  // }
+  // console.log('parameters', parameters);
 
-  for (let i = 0; i < studentList.length; i++) {
+  const url = `http://localhost:5000/students/${studentId}`
+  const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+  };
 
-    if (studentList[i].id == params.id) {
-      student = studentList[i];
-    }
-  }
-
-  console.log(student);
-  
+  // make request the 'url'
+  fetch(url, requestOptions)
+      // convert the response into JSON object.
+      .then(response => response.json())
+      // update the state variables using the data object.
+      .then(data => {
+        console.log('data:',data)
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setRoll(data.rollNumber);
+        setID(data.id);
+      })
+      // log the error if the request fails
+      .catch(error => console.log('Form submit error', error))
+ 
   return (
     <div>
-      <h1>{student.name}</h1>
-      <p>{student.clzz}</p>
-      <p>{student.roll}</p>
+      <ViewStudent
+        firstName={firstName}
+        lastName={lastName}
+        rollNumber={rollNumber}
+        id={id}/>
     </div>
   )
 }
