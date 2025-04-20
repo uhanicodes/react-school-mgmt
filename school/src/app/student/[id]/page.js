@@ -1,16 +1,30 @@
 'use client';
+import { Button } from "@/components/ui/button";
+import { PenLine, X } from "lucide-react";
 import { use } from "react";
 import { useState } from "react";
 
-function ViewStudent({ firstName, lastName, rollNumber, id }) {
+function ViewStudent({ firstName, lastName, rollNumber, id, action }) {
 
   return (
     <div>
       <h1>{firstName + " " + lastName}</h1>
       <p>{rollNumber}</p>
       <p>{id}</p>
+      <Button onClick={action} variant="outline">
+        <PenLine/>Edit
+      </Button>
     </div>
   )
+}
+
+function EditStudent({ action }) {
+  return (<div>
+    <h1>Hello!</h1>
+    <Button onClick={action} variant="outline">
+      <X/>Cancel
+    </Button>
+  </div>)
 }
 
 export default function Student({ params }) {
@@ -50,11 +64,13 @@ export default function Student({ params }) {
  
   return (
     <div>
-      <ViewStudent
+      { isEdit ? <EditStudent 
+        action={() => setEdit(false)}/> : <ViewStudent
         firstName={firstName}
         lastName={lastName}
         rollNumber={rollNumber}
-        id={id}/>
+        id={id}
+        action={() => setEdit(true)}/>}
     </div>
   )
 }
