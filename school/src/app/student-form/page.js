@@ -58,7 +58,6 @@ export default function studentForm() {
                   <Input placeholder="ID" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Put ID
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -73,7 +72,7 @@ export default function studentForm() {
                 <FormControl>
                   <Input placeholder="Roll" {...field} />
                 </FormControl>
-                <FormDescription>Write your roll number</FormDescription>
+                <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -87,7 +86,7 @@ export default function studentForm() {
                 <FormControl>
                   <Input placeholder="First Name" {...field} />
                 </FormControl>
-                <FormDescription>Write your first name</FormDescription>
+                <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -101,7 +100,7 @@ export default function studentForm() {
                 <FormControl>
                   <Input placeholder="Last Name" {...field} />
                 </FormControl>
-                <FormDescription>Write your last name</FormDescription>
+                <FormDescription></FormDescription>
                 <FormMessage />
               </FormItem>
             )}
