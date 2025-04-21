@@ -49,6 +49,10 @@ export default function Home() {
         header: () => <span>ID</span>
       },
       {
+        accessorKey: 'Class',
+        header: () => <span>Class</span>
+      },
+      {
         accessorKey: 'RollNumber',
         header: () => <span>Roll Number</span>
       },

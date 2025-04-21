@@ -65,6 +65,20 @@ export default function studentForm() {
           />
           <FormField
             control={form.control}
+            name='clazz'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Class</FormLabel>
+                <FormControl>
+                  <Input placeholder='Class' {...field}/>
+                </FormControl>
+                <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name='rollNumber'
             render={({ field }) => (
               <FormItem>
