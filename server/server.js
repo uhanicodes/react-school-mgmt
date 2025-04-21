@@ -40,8 +40,8 @@ app.get('/students', (req, res) => {
 })
 
 app.post('/students', (req, res) => {
-    const sql = `INSERT INTO students (ID, RollNumber, LastName, FirstName) 
-    VALUES (${req.body.id}, ${req.body.rollNumber}, "${req.body.lastName}", "${req.body.firstName}")`;
+    const sql = `INSERT INTO students (ID, Class, RollNumber, LastName, FirstName) 
+    VALUES (${req.body.id}, ${req.body.clazz}, ${req.body.rollNumber}, "${req.body.lastName}", "${req.body.firstName}")`;
 
     console.log(sql);
 
@@ -80,6 +80,7 @@ app.get('/students/:id', (req, res) => {
 
         res.send({
             id: row[0].ID,
+            clazz: row[0].Class,
             rollNumber: row[0].RollNumber,
             firstName: row[0].FirstName,
             lastName: row[0].LastName
@@ -89,7 +90,8 @@ app.get('/students/:id', (req, res) => {
 
 app.put('/students/:id', (req, res) => {
     let sql = `UPDATE students
-            SET FirstName = "${req.body.firstName}", LastName = "${req.body.lastName}", RollNumber = ${req.body.rollNumber}
+            SET FirstName = "${req.body.firstName}", LastName = "${req.body.lastName}", 
+            Class = ${req.body.clazz}, RollNumber = ${req.body.rollNumber}
             WHERE ID = ${req.params.id}`;
 
     connection.query(sql, (err, result, fields) => {
