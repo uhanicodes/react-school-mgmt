@@ -16,23 +16,17 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form";
 
-function ViewStudent({ firstName, lastName, clazz, rollNumber, id, action }) {
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
-  return (
-    <div>
-      <h1>{firstName + " " + lastName}</h1>
-      <p>{clazz}</p>
-      <p>{rollNumber}</p>
-      <p>{id}</p>
-      <Button onClick={action} variant="outline">
-        <PenLine/>Edit
-      </Button>
-    </div>
-  )
-}
-
-function EditStudent({ firstName, lastName, rollNumber, id, action }) {
-
+function ViewStudent({ firstName, lastName, clazz, rollNumber, id }) {
+  
   const form = useForm();
 
   function submitForm(data) {
@@ -50,76 +44,112 @@ function EditStudent({ firstName, lastName, rollNumber, id, action }) {
           .then(response => console.log('Submit Successfully!'))
           .catch(error => console.log('Form submit error', error))
   }
-
-  return (<div>
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitForm)} className="space-y-8">
-        <FormField 
-          control={form.control} 
-          name='id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>ID</FormLabel>
-              <FormControl>
-                <Input disabled placeholder="ID" {...field} />
-              </FormControl>
-              <FormDescription>
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='rollNumber'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Roll</FormLabel>
-              <FormControl>
-                <Input placeholder="Roll" {...field} />
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='firstName'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input placeholder="First Name" {...field} />
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='lastName'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Last Name" {...field} />
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">
-          <Save/>Save
-        </Button>
-        <Button onClick={action} variant="outline">
-          <X/>Cancel
-        </Button>
-      </form>
-    </Form>
-  </div>)
+  
+  return (
+    <div>
+      <h1>{firstName + " " + lastName}</h1>
+      <p>{clazz}</p>
+      <p>{rollNumber}</p>
+      <p>{id}</p>
+      
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">
+            <PenLine/>Edit
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Student</DialogTitle>
+            <DialogDescription>Edit student here.</DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(submitForm)} className="space-y-8">
+              <FormField 
+                control={form.control} 
+                name='id'
+                defaultValue={id}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>ID</FormLabel>
+                    <FormControl>
+                      <Input disabled placeholder="ID" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='clazz'
+                defaultValue={clazz}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Class</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Class" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='rollNumber'
+                defaultValue={rollNumber}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Roll</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Roll" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='firstName'
+                defaultValue={firstName}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="First Name" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='lastName'
+                defaultValue={lastName}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Last Name" {...field} />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">
+                <Save/>Save
+              </Button>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  )
 }
 
 export default function Student({ params }) {
@@ -129,7 +159,6 @@ export default function Student({ params }) {
   const [clazz, setClazz] = useState("");
   const [rollNumber, setRoll] = useState("");
   const [id, setID] = useState("");
-  const [isEdit, setEdit] = useState(false);
 
   const { id : studentId } = use(params); 
   // {
@@ -161,18 +190,12 @@ export default function Student({ params }) {
  
   return (
     <div>
-      { isEdit ? <EditStudent 
-        firstName={firstName}
-        lastName={lastName}        
-        rollNumber={rollNumber}
-        id={id}
-        action={() => setEdit(false)}/> : <ViewStudent
+      <ViewStudent
         firstName={firstName}
         lastName={lastName}
         clazz={clazz}
         rollNumber={rollNumber}
-        id={id}
-        action={() => setEdit(true)}/>}
+        id={id} />
     </div>
   )
 }
