@@ -16,11 +16,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form";
 
-function ViewStudent({ firstName, lastName, rollNumber, id, action }) {
+function ViewStudent({ firstName, lastName, clazz, rollNumber, id, action }) {
 
   return (
     <div>
       <h1>{firstName + " " + lastName}</h1>
+      <p>{clazz}</p>
       <p>{rollNumber}</p>
       <p>{id}</p>
       <Button onClick={action} variant="outline">
@@ -125,6 +126,7 @@ export default function Student({ params }) {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [clazz, setClazz] = useState("");
   const [rollNumber, setRoll] = useState("");
   const [id, setID] = useState("");
   const [isEdit, setEdit] = useState(false);
@@ -150,6 +152,7 @@ export default function Student({ params }) {
         console.log('data:',data)
         setFirstName(data.firstName);
         setLastName(data.lastName);
+        setClazz(data.clazz);
         setRoll(data.rollNumber);
         setID(data.id);
       })
@@ -160,12 +163,13 @@ export default function Student({ params }) {
     <div>
       { isEdit ? <EditStudent 
         firstName={firstName}
-        lastName={lastName}
+        lastName={lastName}        
         rollNumber={rollNumber}
         id={id}
         action={() => setEdit(false)}/> : <ViewStudent
         firstName={firstName}
         lastName={lastName}
+        clazz={clazz}
         rollNumber={rollNumber}
         id={id}
         action={() => setEdit(true)}/>}
