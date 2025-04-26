@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/students', (req, res) => {
-    const sql = `SELECT * FROM students`;
+    const sql = `SELECT * FROM students LIMIT ${req.query.maxResults} OFFSET ${req.query.startFrom}`;
 
     console.log(sql);
 

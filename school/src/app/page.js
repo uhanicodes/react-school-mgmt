@@ -35,6 +35,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
 export default function Home() {
 
   console.log("Component initializing...")
@@ -127,7 +137,10 @@ export default function Home() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const url = `http://localhost:5000/students`
+  const [startFrom, setStartFrom] = useState(0);
+  const [maxResults, setMaxResults] = useState(10);
+
+  const url = `http://localhost:5000/students?startFrom=${startFrom}&maxResults=${maxResults}`
   const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -181,6 +194,22 @@ export default function Home() {
           ))}
         </TableBody>
       </Table>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }
