@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
+import { useSearchParams } from "next/navigation";
+
 import {
   ColumnDef,
   flexRender,
@@ -46,6 +48,21 @@ import {
 } from "@/components/ui/pagination"
 
 export default function Home() {
+
+  const searchParams = useSearchParams();
+
+  let startFrom = 0;
+  let maxResults = 5;
+
+  if (searchParams.get('startFrom') !== null) {
+    startFrom = parseInt(searchParams.get('startFrom'));
+  }
+
+  if (searchParams.get('maxResults') !== null) {
+    maxResults = parseInt(searchParams.get('maxResults'));
+  }
+
+  console.log("query:", startFrom, maxResults);
 
   console.log("Component initializing...")
 
@@ -137,9 +154,6 @@ export default function Home() {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const [startFrom, setStartFrom] = useState(0);
-  const [maxResults, setMaxResults] = useState(10);
-
   const url = `http://localhost:5000/students?startFrom=${startFrom}&maxResults=${maxResults}`
   const requestOptions = {
       method: 'GET',
@@ -197,7 +211,7 @@ export default function Home() {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href="#" />
+            <PaginationPrevious href={`http://localhost:3000/?startFrom=${Math.max(0, startFrom - maxResults)}&maxResults=${maxResults}`} />
           </PaginationItem>
           <PaginationItem>
             <PaginationLink href="#">1</PaginationLink>
@@ -206,7 +220,7 @@ export default function Home() {
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext href="#" />
+            <PaginationNext href={`http://localhost:3000/?startFrom=${startFrom + maxResults}&maxResults=${maxResults}`} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
