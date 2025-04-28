@@ -21,21 +21,43 @@ app.get('/', (req, res) => {
 })
 
 app.get('/students', (req, res) => {
-    const sql = `SELECT * FROM students LIMIT ${req.query.maxResults} OFFSET ${req.query.startFrom}`;
 
-    console.log(sql);
+    const sql1 = `SELECT * FROM students LIMIT ${req.query.maxResults} OFFSET ${req.query.startFrom};`;
 
-    connection.query(sql, (err, result, fields) => {
+    console.log(sql1);
 
+    let students = [];
+
+    connection.query(sql1, (err, result, fields) => {
+        
         if (err instanceof Error) {
             console.log(err);
             return
         }
 
+        students = result;
+
         console.log('result:', result);
         console.log('fields:', fields);
+    
+        const sql2 = `SELECT COUNT(ID) FROM students;`;
+        console.log(sql2);
 
-        res.send(result);
+        connection.query(sql2, (err, result, fields) => {
+
+            if (err instanceof Error) {
+                console.log(err);
+                return
+            }
+            
+            console.log('result:', result);
+            console.log('fields:', fields);
+            
+            res.send({
+                count: result[0]['COUNT(ID)'], 
+                students: students
+            });
+        })
     })
 })
 

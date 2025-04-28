@@ -166,7 +166,7 @@ export default function Home() {
       .then(data => {
         console.log('data:', data)
 
-        setStudents(data);
+        setStudents(data.students);
       })
       .catch(error => console.log('Submit error:', error));
   }, []);
