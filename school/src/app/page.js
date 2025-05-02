@@ -67,6 +67,7 @@ export default function Home() {
   console.log("Component initializing...")
 
   const [students, setStudents] = useState([]);
+  const [count, setCount] = useState(0);
 
   const table = useReactTable({
     data: students,
@@ -167,6 +168,7 @@ export default function Home() {
         console.log('data:', data)
 
         setStudents(data.students);
+        setCount(data.count);
       })
       .catch(error => console.log('Submit error:', error));
   }, []);
@@ -220,7 +222,7 @@ export default function Home() {
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext href={`http://localhost:3000/?startFrom=${startFrom + maxResults}&maxResults=${maxResults}`} />
+            <PaginationNext href={`http://localhost:3000/?startFrom=${Math.min(count - 1 , startFrom + maxResults)}&maxResults=${maxResults}`} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
