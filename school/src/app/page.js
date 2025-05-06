@@ -47,6 +47,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 
+const list = [1, 2, 3, 4];
+
 export default function Home() {
 
   const searchParams = useSearchParams();
@@ -68,6 +70,10 @@ export default function Home() {
 
   const [students, setStudents] = useState([]);
   const [count, setCount] = useState(0);
+
+  const listItems = list.map(page => 
+  <PaginationItem><PaginationLink href={`http://localhost:3000/?startFrom=${(page - 1) * maxResults}&maxResults=${maxResults}`}>{page}
+  </PaginationLink></PaginationItem>)
 
   const table = useReactTable({
     data: students,
@@ -215,9 +221,7 @@ export default function Home() {
           <PaginationItem>
             <PaginationPrevious href={`http://localhost:3000/?startFrom=${Math.max(0, startFrom - maxResults)}&maxResults=${maxResults}`} />
           </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
+          {listItems}
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
