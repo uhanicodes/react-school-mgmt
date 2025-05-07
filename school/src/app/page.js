@@ -72,7 +72,7 @@ export default function Home() {
   const [count, setCount] = useState(0);
 
   const listItems = list.map(page => 
-  <PaginationItem key={page}><PaginationLink href={`http://localhost:3000/?startFrom=${(page - 1) * maxResults}&maxResults=${maxResults}`}>{page}
+  <PaginationItem key={page}><PaginationLink href={`http://localhost:3000/?startFrom=${(page - 1) * maxResults}&maxResults=${maxResults}`} isActive={page == startFrom/maxResults + 1 ? true : false}>{page}
   </PaginationLink></PaginationItem>)
 
   const table = useReactTable({
